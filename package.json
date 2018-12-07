@@ -1,0 +1,23 @@
+{
+  "name": "algorithm-study",
+  "version": "1.0.0",
+  "description": "Algorith study and exercises.",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test": "mocha --timeout 15000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.coding.net/fifahuihua/algorithm-study.git"
+  },
+  "keywords": [
+    "Algorithm"
+  ],
+  "author": "Antony Zhang",
+  "license": "ISC"
+}
