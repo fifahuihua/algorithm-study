@@ -8,8 +8,8 @@
  *              2. If the pivot index is less than array.length-n,
  *                 then stop to sorting the left part of array.
  * 
- * Assumption:  array = [8, 4, 6, 7, 2, 5, 2, 7], n = 3
- * Expected:    [7, 7, 8] 
+ * Assumption:  array = [9, 1, 4, 8, 6, 2, 8, 1, 2], n = 3
+ * Expected:    [1, 1, 2, 4, 6, 2, 8, 8, 9] 
  ***********************************************************************/
 
 const CommonUtil = require("../utils/common.util");
