@@ -2,6 +2,7 @@
 logs
 *.log
 package-lock.json
+.vscode
 
 # Runtime data
 pids
