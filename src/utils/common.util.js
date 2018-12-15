@@ -4,8 +4,8 @@
  * Description: This util file contains some common util functions.
  *******************************************************************/
 
-const fs = require("fs");
-const readline = require("readline");
+const fs = require('fs');
+const readline = require('readline');
 
 /**
  * Swap two item values in array.
@@ -40,7 +40,29 @@ const prettyReversePrint = function(array, start, end, oneRowSize) {
   }
 
   for (let i = end; i >= start; i--) {
-    process.stdout.write(`${array[i]}${i > start ? ", " : ""}`);
+    process.stdout.write(`${array[i]}${i > start ? ', ' : ''}`);
+    if (i % oneRowSize === 0) {
+      console.log();
+    }
+  }
+  console.log();
+};
+
+/**
+ * This function is for pretty print array values of pattern matching results by rows.
+ *
+ * @param {*} array the array need to be printed.
+ * @param {*} start the start index
+ * @param {*} end the end index
+ * @param {*} oneRowSize the number of values in one row.
+ */
+const prettyReversePrintObject = function(array, start, end, oneRowSize) {
+  if (!Array.isArray(array)) {
+    return;
+  }
+
+  for (let i = end; i >= start; i--) {
+    process.stdout.write(`${array[i].word}: ${array[i].result.totalMatched}, `);
     if (i % oneRowSize === 0) {
       console.log();
     }
@@ -53,14 +75,14 @@ const prettyReversePrint = function(array, start, end, oneRowSize) {
  */
 const getPatternsFromFile = function(cb) {
   const patterns = {};
-  const fileStream = fs.createReadStream(__dirname + "/../files/dict.txt");
+  const fileStream = fs.createReadStream(__dirname + '/../files/dict.txt');
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
   });
 
-  rl.on("line", (line) => {
-    const pattern = line.split(" ")[0];
+  rl.on('line', line => {
+    const pattern = line.split(' ')[0];
     if (pattern) {
       patterns[pattern] = {
         totalMatched: 0,
@@ -69,7 +91,7 @@ const getPatternsFromFile = function(cb) {
     }
   });
 
-  rl.on("close", () => {
+  rl.on('close', () => {
     cb(patterns);
   });
 };
@@ -88,5 +110,6 @@ const getPatterns = function() {
 module.exports = {
   swap,
   prettyReversePrint,
+  prettyReversePrintObject,
   getPatterns
 };
