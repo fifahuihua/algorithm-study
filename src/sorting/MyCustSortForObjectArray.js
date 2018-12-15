@@ -11,7 +11,7 @@
  *              3. return sortedArray.
  ***********************************************************************/
 
-const CommonUtil = require("../utils/common.util");
+const CommonUtil = require('../utils/common.util');
 
 /**
  * Getting n biggest numbers from unsorted array.
@@ -29,7 +29,7 @@ const getBiggestNumbers = function(patterns, n) {
   sortedObjectArray[n - 1] = null;
 
   for (let word in patterns) {
-    const firstItem = sortedObjectArray[0] || { result: { totalMatched: 0 } };
+    const firstItem = sortedObjectArray[0] || { result: { totalMatched: -1 } };
     let smallestValue = firstItem.result.totalMatched;
 
     if (patterns[word].totalMatched > smallestValue) {
@@ -46,11 +46,12 @@ const getBiggestNumbers = function(patterns, n) {
  * @param {*} array ordered array.
  * @param {*} v
  */
-const insertValue = function (array, objectItem) {
+const insertValue = function(array, objectItem) {
   array[0] = objectItem;
   const totalMatched = objectItem.result.totalMatched;
   for (let i = 1; i < array.length; i++) {
-    const curTotalMatched = (array[i] || { result: { totalMatched: 0 } }).result.totalMatched;
+    const curTotalMatched = (array[i] || { result: { totalMatched: -1 } })
+      .result.totalMatched;
     if (curTotalMatched >= totalMatched || i === array.length - 1) {
       let endIndex = i;
 

@@ -5,7 +5,7 @@ const CommonUtil = require('./src/utils/common.util');
 
 const myPatternMatchingAlgorithmTest = async function() {
   // get patterns from dict.txt
-  const patterns = await CommonUtil.getPatterns();
+  const patterns = await CommonUtil.getPatterns('dict2.txt');
   let lineNum = 0;
   const maxMatchedWordsLength = 500;
   let testLines = [];
@@ -42,10 +42,7 @@ const myPatternMatchingAlgorithmTest = async function() {
 
   rl.on('close', () => {
     console.log(`Pattern Matching Time Cost: ${Date.now() - start} ms`);
-    const maxMatchedWords = MyCustSort2.getBiggestNumbers(
-      patterns,
-      maxMatchedWordsLength
-    );
+    const maxMatchedWords = MyCustSort2.getBiggestNumbers(patterns, 10);
     console.log(`Total Time Cost: ${Date.now() - start} ms`);
     console.log(`The words of first 500 max matched times: `);
     CommonUtil.prettyReversePrintObject(

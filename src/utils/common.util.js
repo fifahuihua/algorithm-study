@@ -62,7 +62,9 @@ const prettyReversePrintObject = function(array, start, end, oneRowSize) {
   }
 
   for (let i = end; i >= start; i--) {
-    process.stdout.write(`${array[i].word}: ${array[i].result.totalMatched}, `);
+    process.stdout.write(
+      `${array[i].result.originalWord}: ${array[i].result.totalMatched}, `
+    );
     if (i % oneRowSize === 0) {
       console.log();
     }
@@ -73,9 +75,11 @@ const prettyReversePrintObject = function(array, start, end, oneRowSize) {
 /**
  * Reading file content line by line.
  */
-const getPatternsFromFile = function(cb) {
+const getPatternsFromFile = function(dictFileName = 'dict.txt', cb) {
   const patterns = {};
-  const fileStream = fs.createReadStream(__dirname + '/../files/dict.txt');
+  const fileStream = fs.createReadStream(
+    __dirname + '/../files/' + dictFileName
+  );
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
@@ -84,7 +88,8 @@ const getPatternsFromFile = function(cb) {
   rl.on('line', line => {
     const pattern = line.split(' ')[0];
     if (pattern) {
-      patterns[pattern] = {
+      patterns[pattern.toLowerCase()] = {
+        originalWord: pattern,
         totalMatched: 0,
         matchedLines: {}
       };
@@ -99,9 +104,9 @@ const getPatternsFromFile = function(cb) {
 /**
  * Read the pattern words for the dict.txt file.
  */
-const getPatterns = function() {
+const getPatterns = function(dictFileName = 'dict.txt') {
   return new Promise(function(resolve, reject) {
-    getPatternsFromFile(function(patterns) {
+    getPatternsFromFile(dictFileName, function(patterns) {
       resolve(patterns);
     });
   });
