@@ -15,7 +15,8 @@ const matchPatterns = [
  * total the score should be 100.
  */
 const keywordsPatterns = [
-  { pattern: /[肖消销萧][申深伸参呻砷生][克客刻]的救赎/g, score: 50 },
+  { pattern: /[肖消销萧][申深伸参呻砷生][克客刻]/g, score: 25 },
+  { pattern: /的?救赎/g, score: 25 },
   { pattern: /导演/g, score: 50 }
 ];
 
@@ -155,7 +156,7 @@ const getFinalMatchScore = function(text) {
 };
 
 const testInput = function() {
-  const fileStream = fs.createReadStream(__dirname + '/src/files/input.txt');
+  const fileStream = fs.createReadStream(__dirname + '/src/files/input2.txt');
   const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
