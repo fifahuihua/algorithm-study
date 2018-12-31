@@ -6,7 +6,8 @@ const TIME_TYPE = 'TIME';
 const DEFAULT_EVENT_TYPE_OTHERS = '其他';
 const DEFAULT_EVENT_TYPE_CONSUME = '消费';
 const DEFAULT_TIME_TYPE = '今天';
-const NUM_PATTERN = /[零一二三四五六七八九壹贰叁肆伍陆柒捌玖两亿万千仟佰百十拾点块元毛角分\d.半整]+(小时|分钟|分|秒|天)?/g;
+const PRICE_PATTERN = /(花了|用了|花|消费)[零一二三四五六七八九壹贰叁肆伍陆柒捌玖两亿万千仟佰百十拾点块元毛角分\d.半整]+(元)?/g;
+const TIME_PATTERN = /(花了)?[零一二三四五六七八九壹贰叁肆伍陆柒捌玖两亿万千仟佰百十拾点块元毛角分\d.半整小时分钟秒天]+(小时|分钟|分|秒|天)/g;
 
 const keywordsForQuestion = ['多少', '多久', '多长'];
 const keywordsForTime = ['今天', '昨天', '前天', '上周'];
@@ -45,7 +46,11 @@ const getEventType = function(input) {
     }
   }
 
-  return input.indexOf('钱') !== -1
+  if (input.match(TIME_PATTERN)) {
+    return DEFAULT_EVENT_TYPE_OTHERS;
+  }
+
+  return input.match(PRICE_PATTERN) || input.indexOf('钱') !== -1
     ? DEFAULT_EVENT_TYPE_CONSUME
     : DEFAULT_EVENT_TYPE_OTHERS;
 };
@@ -132,11 +137,13 @@ const getEventValue = function(lineText, eventType) {
     return 0;
   }
 
-  const matchedStr = lineText.match(NUM_PATTERN);
+  const matchedStr = lineText.match(
+    eventType === DEFAULT_EVENT_TYPE_CONSUME ? PRICE_PATTERN : TIME_PATTERN
+  );
   if (!matchedStr || matchedStr.length === 0) {
     return 0;
   }
-  const numberStr = matchedStr[0];
+  const numberStr = matchedStr[0].replace(/(花了|用了|花|消费|元)/g, '');
   return unitType === PRICE_TYPE
     ? NumberUtil.convert2Num(numberStr)
     : TimeUtil.convertStr2Time(numberStr);
