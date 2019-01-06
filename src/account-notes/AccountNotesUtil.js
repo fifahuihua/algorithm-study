@@ -157,5 +157,11 @@ module.exports = {
   isQuestion,
   eventTypesInfo,
   PRICE_TYPE,
-  TIME_TYPE
+  TIME_TYPE,
+  DEFAULT_TIME_TYPE,
+  DEFAULT_EVENT_TYPE_OTHERS,
+  DEFAULT_EVENT_TYPE_CONSUME,
+  PRICE_PATTERN,
+  TIME_PATTERN,
+  keywordsForTime
 };

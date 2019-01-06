@@ -73,7 +73,7 @@ const prettyReversePrintObject = function(array, start, end, oneRowSize) {
 };
 
 /**
- * Reading file content line by line.
+ * Return patters from file.
  */
 const getPatternsFromFile = function(dictFileName = 'dict.txt', cb) {
   const patterns = {};
@@ -102,6 +102,28 @@ const getPatternsFromFile = function(dictFileName = 'dict.txt', cb) {
 };
 
 /**
+ * Reading file contents line by line.
+ */
+const getTextLinesFromFile = function(dictFileName = 'dict.txt', cb) {
+  const textLines = [];
+  const fileStream = fs.createReadStream(
+    __dirname + '/../files/' + dictFileName
+  );
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+
+  rl.on('line', line => {
+    textLines.push(line);
+  });
+
+  rl.on('close', () => {
+    cb(textLines);
+  });
+};
+
+/**
  * Read the pattern words for the dict.txt file.
  */
 const getPatterns = function(dictFileName = 'dict.txt') {
@@ -112,9 +134,21 @@ const getPatterns = function(dictFileName = 'dict.txt') {
   });
 };
 
+/**
+ * Return text lines from file with promise.
+ */
+const getTextLines = function(dictFileName = 'dict.txt') {
+  return new Promise(function(resolve, reject) {
+    getTextLinesFromFile(dictFileName, function(textLines) {
+      resolve(textLines);
+    });
+  });
+};
+
 module.exports = {
   swap,
   prettyReversePrint,
   prettyReversePrintObject,
-  getPatterns
+  getPatterns,
+  getTextLines
 };

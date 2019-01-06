@@ -51,6 +51,14 @@ const NEXT_UNIT_MAP = {
   角: '分'
 };
 
+/**
+ * Convert a money string to number.
+ * Example:
+ *  input: 一百二十元三角五分
+ *  output: 120.35
+ *
+ * @param {*} str
+ */
 const convert2Num = function(str) {
   if (!str) {
     return 0;
@@ -66,7 +74,7 @@ const convert2Num = function(str) {
   if (!CHINESE_NUM_UNITS[lastChar]) {
     for (let i = moneyStr.length - 2; i > 0; i--) {
       // find out the last unit and then supplement its next unit in the end of moneny string.
-      if (CHINESE_NUM_UNITS[moneyStr[i]]) {
+      if (CHINESE_NUM_UNITS[moneyStr[i]] && moneyStr[i + 1] !== '0') {
         moneyStr += NEXT_UNIT_MAP[moneyStr[i]];
         break;
       }
@@ -77,6 +85,14 @@ const convert2Num = function(str) {
   return parseFloat(value.toFixed(2));
 };
 
+/**
+ * Convert the string only with number and end with unit.
+ * Example:
+ *  input: 三百
+ *  output: 300
+ *
+ * @param {*} str
+ */
 const convert2NumWithOnlyUnits = function(str) {
   if (!str) {
     return 0;

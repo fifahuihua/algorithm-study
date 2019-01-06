@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Algorith study and exercises.",
   "main": "main.js",
-  "dependencies": {},
+  "dependencies": {
+    "ahocorasick": "^1.0.2",
+    "axios": "^0.18.0"
+  },
   "devDependencies": {
     "mocha": "^5.2.0"
   },
